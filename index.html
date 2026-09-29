@@ -181,13 +181,25 @@ const sug=document.getElementById('sug');
 const equipeEl=document.getElementById('equipe');
 const emptyEl=document.getElementById('equipe-empty');
 
+function snapshotEquipe(){
+  document.querySelectorAll('#equipe .person').forEach((el,i)=>{
+    if(!equipe[i]) return;
+    equipe[i].compareceu=el.dataset.compareceu||equipe[i].compareceu||null;
+    equipe[i].chegada=el.querySelector('.chegada')?.value||'';
+    equipe[i].saida=el.querySelector('.saida')?.value||'';
+    equipe[i].feedback=(el.querySelector('.feedback')?.value||'').trim();
+    equipe[i].motivo=(el.querySelector('.motivo')?.value||'').trim();
+  });
+}
 function renderEquipe(){
+  snapshotEquipe();
   emptyEl.style.display = equipe.length? 'none':'block';
   [...equipeEl.querySelectorAll('.person')].forEach(n=>n.remove());
   equipe.forEach((p,i)=>{
     const div=document.createElement('div');
     div.className='person';
     div.dataset.i=i;
+    if(p.compareceu) div.dataset.compareceu=p.compareceu;
     div.innerHTML=`
       <div class="person-head">
         <div class="person-name">${esc(p.nome)}</div>
@@ -195,25 +207,31 @@ function renderEquipe(){
       </div>
       <label>Compareceu?</label>
       <div class="seg compareceu">
-        <button type="button" data-v="sim">Sim</button>
-        <button type="button" data-v="nao">Não</button>
+        <button type="button" data-v="sim"${p.compareceu==='sim'?' class="on-yes"':''}>Sim</button>
+        <button type="button" data-v="nao"${p.compareceu==='nao'?' class="on-no"':''}>Não</button>
       </div>
       <div class="row">
-        <div><label>Chegada *</label><input type="time" class="chegada" required/></div>
-        <div><label>Saída *</label><input type="time" class="saida" required/></div>
+        <div><label>Chegada *</label><input type="time" class="chegada" required value="${esc(p.chegada||'')}"/></div>
+        <div><label>Saída *</label><input type="time" class="saida" required value="${esc(p.saida||'')}"/></div>
       </div>
       <label>Feedback *</label>
-      <textarea class="feedback" placeholder="Pontualidade, postura, desempenho…" required></textarea>
-      <div class="fields-extra absent-fields">
+      <textarea class="feedback" placeholder="Pontualidade, postura, desempenho…" required>${esc(p.feedback||'')}</textarea>
+      <div class="fields-extra absent-fields${p.compareceu==='nao'?' show':''}">
         <label>Motivo / observação</label>
-        <textarea class="motivo" placeholder="Avisou? Substituto?"></textarea>
+        <textarea class="motivo" placeholder="Avisou? Substituto?">${esc(p.motivo||'')}</textarea>
       </div>`;
     equipeEl.appendChild(div);
     wireSeg(div.querySelector('.compareceu'), v=>{
       div.querySelector('.absent-fields').classList.toggle('show', v==='nao');
       div.dataset.compareceu=v;
+      p.compareceu=v;
     });
+    div.querySelector('.chegada').addEventListener('input',e=>{ p.chegada=e.target.value; });
+    div.querySelector('.saida').addEventListener('input',e=>{ p.saida=e.target.value; });
+    div.querySelector('.feedback').addEventListener('input',e=>{ p.feedback=e.target.value; });
+    div.querySelector('.motivo').addEventListener('input',e=>{ p.motivo=e.target.value; });
     div.querySelector('[data-rm]').addEventListener('click',()=>{
+      snapshotEquipe();
       equipe.splice(i,1); renderEquipe();
     });
   });
