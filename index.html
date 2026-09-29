@@ -104,18 +104,6 @@
   </section>
 
   <section class="card">
-    <h2>Profissional fora da lista?</h2>
-    <div class="seg" id="fora-seg">
-      <button type="button" data-v="nao" class="on-no">Não</button>
-      <button type="button" data-v="sim">Sim</button>
-    </div>
-    <div class="toggle-block" id="fora-block">
-      <div id="extras"></div>
-      <button type="button" class="add-btn" id="add-extra">+ Adicionar nome</button>
-    </div>
-  </section>
-
-  <section class="card">
     <h2>Reembolsos</h2>
     <div class="seg" id="reemb-seg">
       <button type="button" data-v="nao" class="on-no">Não</button>
@@ -143,6 +131,11 @@
       <label>Quem fez a hora extra</label>
       <input type="text" id="he-quem"/>
     </div>
+  </section>
+  <section class="card">
+    <h2>Observações</h2>
+    <label>Observações gerais</label>
+    <textarea id="observacoes" placeholder="Algo importante sobre o evento…"></textarea>
   </section>
 </main>
 <footer>
@@ -179,7 +172,6 @@ function wireYesNo(segId, blockId){
   wireSeg(document.getElementById(segId), v=>{state.v=v; document.getElementById(blockId).classList.toggle('show', v==='sim');});
   return state;
 }
-const fora=wireYesNo('fora-seg','fora-block');
 const reemb=wireYesNo('reemb-seg','reemb-block');
 const he=wireYesNo('he-seg','he-block');
 
@@ -205,21 +197,18 @@ function renderEquipe(){
         <button type="button" data-v="sim">Sim</button>
         <button type="button" data-v="nao">Não</button>
       </div>
-      <div class="fields-extra present-fields">
-        <div class="row">
-          <div><label>Chegada</label><input type="time" class="chegada"/></div>
-          <div><label>Saída</label><input type="time" class="saida"/></div>
-        </div>
-        <label>Feedback</label>
-        <textarea class="feedback" placeholder="Pontualidade, postura, desempenho…"></textarea>
+      <div class="row">
+        <div><label>Chegada *</label><input type="time" class="chegada" required/></div>
+        <div><label>Saída *</label><input type="time" class="saida" required/></div>
       </div>
+      <label>Feedback *</label>
+      <textarea class="feedback" placeholder="Pontualidade, postura, desempenho…" required></textarea>
       <div class="fields-extra absent-fields">
         <label>Motivo / observação</label>
         <textarea class="motivo" placeholder="Avisou? Substituto?"></textarea>
       </div>`;
     equipeEl.appendChild(div);
     wireSeg(div.querySelector('.compareceu'), v=>{
-      div.querySelector('.present-fields').classList.toggle('show', v==='sim');
       div.querySelector('.absent-fields').classList.toggle('show', v==='nao');
       div.dataset.compareceu=v;
     });
@@ -254,49 +243,32 @@ busca.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); a
 document.getElementById('add-btn').addEventListener('click',()=>addNome(selectedSug||busca.value));
 document.addEventListener('click',e=>{ if(!e.target.closest('.suggestions')) sug.classList.remove('show'); });
 
-const extrasEl=document.getElementById('extras');
-document.getElementById('add-extra').addEventListener('click',()=>{
-  const item=document.createElement('div');
-  item.className='person';
-  item.innerHTML=`
-    <label>Nome</label><input type="text" class="ex-nome" placeholder="Nome completo"/>
-    <div class="row">
-      <div><label>Chegada</label><input type="time" class="ex-chegada"/></div>
-      <div><label>Saída</label><input type="time" class="ex-saida"/></div>
-    </div>
-    <label>Feedback</label><textarea class="ex-feedback"></textarea>
-    <button type="button" class="icon-btn" style="margin-top:8px">Remover</button>`;
-  item.querySelector('.icon-btn').addEventListener('click',()=>item.remove());
-  extrasEl.appendChild(item);
-});
-
 document.getElementById('enviar').addEventListener('click',()=>{
   const data=document.getElementById('data').value;
   const local=document.getElementById('local').value.trim();
   if(!data||!local){ alert('Preencha data e local do evento.'); return; }
   if(!equipe.length){ alert('Adicione pelo menos um profissional.'); return; }
   const people=[];
-  document.querySelectorAll('#equipe .person').forEach((el,i)=>{
+  for(const [i,el] of [...document.querySelectorAll('#equipe .person')].entries()){
+    const compareceu=el.dataset.compareceu||null;
+    const chegada=el.querySelector('.chegada')?.value||'';
+    const saida=el.querySelector('.saida')?.value||'';
+    const feedback=(el.querySelector('.feedback')?.value||'').trim();
+    const motivo=(el.querySelector('.motivo')?.value||'').trim();
+    if(!compareceu){ alert('Marque se '+equipe[i].nome+' compareceu.'); return; }
+    if(!chegada||!saida||!feedback){ alert('Preencha chegada, saída e feedback de '+equipe[i].nome+'.'); return; }
     people.push({
       nome:equipe[i].nome,
-      compareceu:el.dataset.compareceu||null,
-      chegada:el.querySelector('.chegada')?.value||null,
-      saida:el.querySelector('.saida')?.value||null,
-      feedback:el.querySelector('.feedback')?.value.trim()||null,
-      motivoAusencia:el.querySelector('.motivo')?.value.trim()||null,
+      compareceu,
+      chegada,
+      saida,
+      feedback,
+      motivoAusencia: compareceu==='nao'?motivo||null:null,
     });
-  });
-  if(people.some(p=>!p.compareceu)){ alert('Marque se cada profissional compareceu.'); return; }
-  const extras=[...extrasEl.querySelectorAll('.person')].map(el=>({
-    nome:el.querySelector('.ex-nome').value.trim(),
-    chegada:el.querySelector('.ex-chegada').value||null,
-    saida:el.querySelector('.ex-saida').value||null,
-    feedback:el.querySelector('.ex-feedback').value.trim()||null,
-  })).filter(x=>x.nome);
+  }
   const payload={
     evento:{data, local},
     equipe:people,
-    profissionaisExtras: fora.v==='sim'?extras:[],
     reembolsos: reemb.v==='sim'?{teve:true,detalhe:document.getElementById('reemb-detalhe').value.trim()}:{teve:false},
     horaExtra: he.v==='sim'?{
       teve:true,
@@ -305,6 +277,7 @@ document.getElementById('enviar').addEventListener('click',()=>{
       solicitou:document.getElementById('he-solicitou').value.trim()||null,
       quemFez:document.getElementById('he-quem').value.trim()||null,
     }:{teve:false},
+    observacoes:document.getElementById('observacoes').value.trim()||null,
     preenchidoEm:new Date().toISOString(),
   };
   document.getElementById('resumo').textContent=JSON.stringify(payload,null,2);
