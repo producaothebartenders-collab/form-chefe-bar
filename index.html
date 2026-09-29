@@ -7,103 +7,102 @@
 <title>Pós-evento · Chefe de bar</title>
 <style>
   :root {
-    --bg: #0f1419; --card: #1a222c; --card2: #232d3a; --border: #2e3a4a;
-    --text: #f2f5f8; --muted: #9aa8b8; --accent: #e8a838; --accent2: #3d8bfd;
-    --ok: #2ecc71; --danger: #e74c3c; --radius: 14px; --pad: 16px;
+    --bg:#0f1419; --card:#1a222c; --card2:#232d3a; --border:#2e3a4a;
+    --text:#f2f5f8; --muted:#9aa8b8; --accent:#e8a838; --accent2:#3d8bfd;
+    --ok:#2ecc71; --danger:#e74c3c; --radius:14px; --pad:16px;
   }
-  * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    -webkit-tap-highlight-color: transparent; }
-  body { padding: 0 0 120px; min-height: 100dvh; }
-  header {
-    position: sticky; top: 0; z-index: 10;
-    background: linear-gradient(180deg, #151c24 0%, #151c24ee 80%, transparent);
-    padding: 14px var(--pad) 18px; backdrop-filter: blur(8px);
-  }
-  .badge { display: inline-block; font-size: 11px; letter-spacing: .06em; text-transform: uppercase;
-    color: var(--accent); background: #e8a83822; border: 1px solid #e8a83855;
-    padding: 4px 10px; border-radius: 999px; margin-bottom: 8px; }
-  h1 { font-size: 1.25rem; margin: 0 0 4px; line-height: 1.3; }
-  .meta { color: var(--muted); font-size: .9rem; }
-  .meta strong { color: var(--text); font-weight: 600; }
-  main { padding: 0 var(--pad); display: flex; flex-direction: column; gap: 14px; }
-  section.card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 14px; }
-  section.card h2 {
-    margin: 0 0 12px; font-size: .78rem; letter-spacing: .08em;
-    text-transform: uppercase; color: var(--muted); font-weight: 600; }
-  .person {
-    background: var(--card2); border: 1px solid var(--border);
-    border-radius: 12px; padding: 12px; margin-bottom: 10px; }
-  .person:last-child { margin-bottom: 0; }
-  .person-name { font-weight: 600; font-size: 1rem; margin-bottom: 10px; }
-  label { display: block; font-size: .75rem; color: var(--muted); margin: 8px 0 4px; }
-  input[type="text"], input[type="number"], input[type="time"], textarea, select {
-    width: 100%; background: var(--bg); color: var(--text);
-    border: 1px solid var(--border); border-radius: 10px;
-    padding: 11px 12px; font-size: 16px; outline: none; }
-  input:focus, textarea:focus, select:focus { border-color: var(--accent2); }
-  textarea { min-height: 72px; resize: vertical; }
-  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-  .seg { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .seg button {
-    appearance: none; border: 1px solid var(--border); background: var(--bg);
-    color: var(--muted); border-radius: 10px; padding: 12px; font-size: .95rem; font-weight: 600; }
-  .seg button.on-yes { background: #2ecc7122; border-color: var(--ok); color: var(--ok); }
-  .seg button.on-no { background: #e74c3c22; border-color: var(--danger); color: var(--danger); }
-  .fields-extra { display: none; margin-top: 4px; }
-  .fields-extra.show { display: block; }
-  .toggle-block { display: none; }
-  .toggle-block.show { display: block; }
-  .add-btn, .remove-btn {
-    appearance: none; width: 100%; margin-top: 8px;
-    border: 1px dashed var(--border); background: transparent;
-    color: var(--accent2); border-radius: 10px; padding: 12px; font-size: .95rem; font-weight: 600; }
-  .remove-btn { color: var(--danger); border-style: solid; margin-top: 6px; width: auto; padding: 8px 12px; }
-  .extra-item { background: var(--card2); border: 1px solid var(--border); border-radius: 12px; padding: 12px; margin-bottom: 8px; }
-  footer {
-    position: fixed; bottom: 0; left: 0; right: 0;
-    padding: 12px var(--pad) calc(12px + env(safe-area-inset-bottom));
-    background: linear-gradient(0deg, #0f1419 70%, transparent);
-  }
-  .submit {
-    width: 100%; appearance: none; border: none;
-    background: var(--accent); color: #1a1205;
-    font-weight: 700; font-size: 1.05rem; padding: 16px;
-    border-radius: 14px; box-shadow: 0 8px 24px #e8a83833; }
-  .submit:active { transform: scale(.98); }
-  .proto-note { font-size: .75rem; color: var(--muted); text-align: center; margin-top: 8px; }
-  .done {
-    display: none; position: fixed; inset: 0; background: #0f1419f2;
-    z-index: 50; padding: var(--pad); align-items: center; justify-content: center; flex-direction: column;
-    text-align: center; }
-  .done.show { display: flex; }
-  .done h2 { color: var(--ok); margin: 0 0 8px; }
-  .done pre {
-    text-align: left; background: var(--card); border: 1px solid var(--border);
-    border-radius: 12px; padding: 12px; max-height: 40vh; overflow: auto;
-    font-size: 11px; width: 100%; color: var(--muted); }
-  .done .actions { display: flex; gap: 8px; width: 100%; margin-top: 12px; }
-  .done .actions button {
-    flex: 1; appearance: none; border: 1px solid var(--border);
-    background: var(--card); color: var(--text); border-radius: 12px;
-    padding: 14px; font-weight: 600; }
-  .done .actions button.primary { background: var(--accent); color: #1a1205; border: none; }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    -webkit-tap-highlight-color:transparent}
+  body{padding:0 0 130px;min-height:100dvh}
+  header{padding:18px var(--pad) 8px}
+  .badge{display:inline-block;font-size:11px;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--accent);background:#e8a83822;border:1px solid #e8a83855;
+    padding:4px 10px;border-radius:999px;margin-bottom:8px}
+  h1{font-size:1.35rem;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:.9rem;margin:0}
+  main{padding:0 var(--pad);display:flex;flex-direction:column;gap:14px}
+  section.card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:14px}
+  section.card h2{margin:0 0 12px;font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  label{display:block;font-size:.75rem;color:var(--muted);margin:8px 0 4px}
+  input,textarea,select{width:100%;background:var(--bg);color:var(--text);border:1px solid var(--border);
+    border-radius:10px;padding:11px 12px;font-size:16px;outline:none}
+  input:focus,textarea:focus,select:focus{border-color:var(--accent2)}
+  textarea{min-height:72px;resize:vertical}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .seg{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .seg button{appearance:none;border:1px solid var(--border);background:var(--bg);color:var(--muted);
+    border-radius:10px;padding:12px;font-size:.95rem;font-weight:600}
+  .seg button.on-yes{background:#2ecc7122;border-color:var(--ok);color:var(--ok)}
+  .seg button.on-no{background:#e74c3c22;border-color:var(--danger);color:var(--danger)}
+  .fields-extra,.toggle-block{display:none}
+  .fields-extra.show,.toggle-block.show{display:block}
+  .person{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:12px;margin-bottom:10px}
+  .person-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+  .person-name{font-weight:600;font-size:1rem}
+  .icon-btn{appearance:none;border:none;background:transparent;color:var(--danger);font-size:.85rem;font-weight:600;padding:4px 0}
+  .add-row{display:flex;gap:8px;align-items:stretch}
+  .add-row input{flex:1}
+  .add-row button{appearance:none;border:none;background:var(--accent2);color:#fff;border-radius:10px;
+    padding:0 16px;font-weight:700;white-space:nowrap}
+  .add-btn{appearance:none;width:100%;margin-top:8px;border:1px dashed var(--border);background:transparent;
+    color:var(--accent2);border-radius:10px;padding:12px;font-size:.95rem;font-weight:600}
+  .hint{font-size:.75rem;color:var(--muted);margin-top:6px}
+  .suggestions{position:relative}
+  .sug-list{display:none;position:absolute;left:0;right:0;top:100%;z-index:20;max-height:220px;overflow:auto;
+    background:var(--card2);border:1px solid var(--border);border-radius:10px;margin-top:4px}
+  .sug-list.show{display:block}
+  .sug-item{padding:12px;border-bottom:1px solid var(--border);cursor:pointer}
+  .sug-item:last-child{border-bottom:none}
+  .sug-item:active,.sug-item:hover{background:var(--bg)}
+  footer{position:fixed;bottom:0;left:0;right:0;padding:12px var(--pad) calc(12px + env(safe-area-inset-bottom));
+    background:linear-gradient(0deg,#0f1419 70%,transparent)}
+  .submit{width:100%;appearance:none;border:none;background:var(--accent);color:#1a1205;
+    font-weight:700;font-size:1.05rem;padding:16px;border-radius:14px;box-shadow:0 8px 24px #e8a83833}
+  .proto-note{font-size:.75rem;color:var(--muted);text-align:center;margin-top:8px}
+  .done{display:none;position:fixed;inset:0;background:#0f1419f2;z-index:50;padding:var(--pad);
+    align-items:center;justify-content:center;flex-direction:column;text-align:center}
+  .done.show{display:flex}
+  .done h2{color:var(--ok);margin:0 0 8px}
+  .done pre{text-align:left;background:var(--card);border:1px solid var(--border);border-radius:12px;
+    padding:12px;max-height:40vh;overflow:auto;font-size:11px;width:100%;color:var(--muted)}
+  .done .actions{display:flex;gap:8px;width:100%;margin-top:12px}
+  .done .actions button{flex:1;appearance:none;border:1px solid var(--border);background:var(--card);
+    color:var(--text);border-radius:12px;padding:14px;font-weight:600}
+  .done .actions button.primary{background:var(--accent);color:#1a1205;border:none}
+  .empty{color:var(--muted);font-size:.9rem;padding:8px 0}
 </style>
 </head>
 <body>
 <header>
-  <span class="badge">Protótipo · Chefe de bar</span>
-  <h1 id="titulo"></h1>
-  <div class="meta"><strong id="local"></strong> · <span id="data"></span></div>
+  <span class="badge">Pós-evento · Chefe de bar</span>
+  <h1>Relatório do evento</h1>
+  <p class="sub">Um formulário para qualquer evento</p>
 </header>
 <main>
   <section class="card">
-    <h2>Equipe escalada</h2>
-    <div id="equipe"></div>
+    <h2>Evento</h2>
+    <label>Data</label>
+    <input type="date" id="data" required/>
+    <label>Local</label>
+    <input type="text" id="local" placeholder="Ex.: Central Hall" required/>
   </section>
+
+  <section class="card">
+    <h2>Equipe no evento</h2>
+    <div id="equipe"><div class="empty" id="equipe-empty">Nenhum profissional adicionado ainda.</div></div>
+    <label>Adicionar profissional</label>
+    <div class="suggestions">
+      <div class="add-row">
+        <input type="text" id="busca" placeholder="Digite o nome…" autocomplete="off"/>
+        <button type="button" id="add-btn">Add</button>
+      </div>
+      <div class="sug-list" id="sug"></div>
+    </div>
+    <div class="hint">Lista do RH ativo (sem descontinuados). Digite pra filtrar.</div>
+  </section>
+
   <section class="card">
     <h2>Profissional fora da lista?</h2>
     <div class="seg" id="fora-seg">
@@ -112,9 +111,10 @@
     </div>
     <div class="toggle-block" id="fora-block">
       <div id="extras"></div>
-      <button type="button" class="add-btn" id="add-extra">+ Adicionar profissional</button>
+      <button type="button" class="add-btn" id="add-extra">+ Adicionar nome</button>
     </div>
   </section>
+
   <section class="card">
     <h2>Reembolsos</h2>
     <div class="seg" id="reemb-seg">
@@ -126,6 +126,7 @@
       <textarea id="reemb-detalhe" placeholder="Ex.: Alyne — Uber R$ 45"></textarea>
     </div>
   </section>
+
   <section class="card">
     <h2>Hora extra</h2>
     <div class="seg" id="he-seg">
@@ -134,19 +135,13 @@
     </div>
     <div class="toggle-block" id="he-block">
       <div class="row">
-        <div>
-          <label>Quantas horas</label>
-          <input type="number" id="he-horas" min="0" step="0.5" placeholder="Ex.: 2"/>
-        </div>
-        <div>
-          <label>Valor da hora (R$)</label>
-          <input type="number" id="he-valor" min="0" step="0.01" placeholder="Ex.: 50"/>
-        </div>
+        <div><label>Quantas horas</label><input type="number" id="he-horas" min="0" step="0.5"/></div>
+        <div><label>Valor da hora (R$)</label><input type="number" id="he-valor" min="0" step="0.01"/></div>
       </div>
       <label>Quem solicitou</label>
-      <input type="text" id="he-solicitou" placeholder="Nome de quem pediu"/>
+      <input type="text" id="he-solicitou"/>
       <label>Quem fez a hora extra</label>
-      <input type="text" id="he-quem" placeholder="Nome(s)"/>
+      <input type="text" id="he-quem"/>
     </div>
   </section>
 </main>
@@ -164,133 +159,164 @@
   </div>
 </div>
 <script>
-const EVENT = {"titulo": "15 anos — Fernanda (mãe Nicha)", "local": "CENTRAL HALL", "data": "25/09/2026", "empresa": "THE BARTENDERS", "fonte": "RH/EVENTOS_4_SEMANA_SETEMBRO_TB · aba 1", "profissionais": [{"nome": "Guilherme Marodin"}, {"nome": "Guilherme da Rosa Ramos"}, {"nome": "Thaiane Franciscon Machado"}, {"nome": "Gabrielly Allanis Martins Witajewski"}, {"nome": "Marcelo Garcia Roman Júnior"}, {"nome": "Alyne Fernanda Otto"}]};
-document.getElementById('titulo').textContent = EVENT.titulo;
-document.getElementById('local').textContent = EVENT.local;
-document.getElementById('data').textContent = EVENT.data;
-function esc(s) {
-  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const PROFISSIONAIS = ["Ademir Freire da Silva", "Adilson Floriano Dos Santos", "Adrielli Helina Dariva", "Alesandro Da Silva", "Alessandro schaitel meira", "Alex da Silva", "Alex Sandro de Oliveira", "Alexandra Honorato", "Alexandre Silveira", "Alexandre Veiga", "Aline Heslen de Almeida Rodrigues", "Aline Pupo Martins", "Alison Fabiano Alexandre", "Allan Cristopher Teixeira", "Allan deivd freire da silva", "Alyne Fernanda Otto", "Amanda Beatris Alves", "Amanda Evelyn Pancera", "Amon Esdras Nascimento Roman", "Ana Carolina Gouveia Paulino", "Ana Carolyne Unti de Campos José", "Ana Celina Guimarães Vaz", "Ana Karine Gomes Costa", "Ana Luiza Soares Captain da Silva", "Ana Maria Quintino da Silva", "Ana Paula de Oliveira", "Anderson T. Wojtovicz", "Anderson Tadeu Wojtovicz", "Andre Luis De Freitas Fraga", "Andressa Lemos Ferreira", "Andrey Pierre", "André Garcia de Oliveira", "Antônio Hoffmann de Avanço", "Antônio Lourenço Aires", "Ariane Oliveira", "Ariany Nayara Pimentel Costa", "Arine Alves Doria", "Arthur da Silva Oliveira", "Arthur Marques", "BAR DE CAFÉ", "BAR DE MULES", "BARBACK FULL", "BARBACK INICIANTE", "BARTENDER EXTRA", "BARTENDER FULL", "BARTENDER INICIANTE", "BARTENDER TREINAMENTO", "Beatriz Cella Rosa Romão", "Beatriz Cristina de Oliveira de Lara", "Beatriz Regina Alvaristo de Souza", "Bianca Carolina Caetano", "Bianca de Morais Oliva", "Brayan Lucas de Deus", "Brenda Martini de Oliveira", "Breno Bottega Bueno", "Bruna Andrade Dias", "Bruna Silmara Felizardo Machado", "Bruna Tiemi Toyoshima Oliveira", "Bruno Belão", "Bruno Cesar de Souza", "Bruno de Ramos", "Bruno Guilherme Lubke", "Bruno makoto ferreira", "Bruno Pedroso", "Bruno Simão Ferreira", "Bruno Wesley Rodrigues", "Bruno Willian Martins Moreira", "Camila Fao de Souza", "Camila Patricia Ribeiro Marques", "Camila Ribeiro Rodrigues", "Camilla Luana Bonato", "Camily Ferreira da Silva", "Carlos Alexandre de Lara dos Santos", "Carlos Alexandre Ferreira", "Carlos Eduardo Alves Miguel", "Carlos Eduardo Bueno", "Carlos Eduardo Müller Silveira", "Carolina Pagoto Gonçalves", "Caroline Pessatti Medeiros", "CARRINHO", "Cauã Colleone Goes", "Cauê Gamonal Barra", "Cecília Bortoli Mariotto", "Cesar Augusto Paiano Lopes da Costa", "CHARUTARIA", "CHEFE DE BAR", "COPEIRO", "Cristhian Mendoza", "Cristian Schenberger", "Cristiane de Santana Ferreira", "Cristiano de Moura", "Célia Gomes Gonzaga", "Dagny Giovana Santos", "Daiana Machado Xavier", "Daianny Mabilly Galdino da Silva", "Daniel Canuto Silva", "Daniel dos Santos Vila Rosa", "Daniele Garcia Custódio", "Darilio Lima", "Davi miranda lukacheski", "David jean rocha schneider", "David Kalleb Theodoro Gomes", "David vieira", "Dayana Rafaele Pikussa", "Diego landovski", "Diego Vitalino", "Dihego vieira de Souza", "Douglas Dias", "Douglas Fernandes Silva Freitas", "Drielly Matos", "Edilaine Oliveira Lima", "Edinaldo Ribeiro", "Edna Mendes Faria", "Eduarda Bibiano Ferreira da Silva", "Eduarda Isa Moreira", "Eduardo Alves Martinez Brenes", "Eduardo de Souza Ramos", "Eduardo Fagundes Consulin", "Eduardo Gabriel De Oliveira", "Elaine Aparecida Haffermann", "Eli Simões", "Elian Eckel Treitny", "Eliane de Souza Alves", "Eliane Terezinha De Oliveira", "Elisangela Goroni Barbosa da Silva", "Ellen Camila Sidoski", "Ely Angelo Souza da Silva", "Emanuele Coppi Gonchorovski", "Emanuelle Vitoria da Rosa", "Emanuelly S Brandão", "Emilly Kauanne Oliveira dos Santos", "Emily Gabrielle de Andrade", "Emily Nicoli Camargo", "Emyli Campos", "Erna Izaltina Gomez", "Estephany Ferreira Leonartsik", "Etiane da Silva", "Evandro do Rocio", "Evandro Garcia", "Evelyn Janjob Gomes", "Evelyn Oliveira da Luz", "Everton Gonçalves", "Everton willian Vicentini", "Fabrício de Abreu Nascimento", "Felipe Gonçalves", "Felipe Yuji Fujikawa", "Fernanda Pereira Pinto", "Fernando Gabriel Figueroa", "Fernando Lopes da Silva", "Flaviana correia", "Franciele Chaves", "Francisco marconilson de oliveira Sampaio", "Francisco Olavio Alves da Silva", "Gabriel Costa Ataíde", "Gabriel de Oliveira Pacheco da Silva", "Gabriel Ferrari da Silva", "Gabriel Henrique Pereira da Silva", "Gabriel Luis panho", "Gabriel Rodrigo Petronilo Freitas", "Gabriel Soares", "Gabriel Tomaz ribeiro da Silva", "Gabriela Lemos Fagundes", "Gabrieli Cristina dos Santo", "Gabriella Stefanny Oliveira Lopes", "Gabrielle eduarda Alves", "Gabrielly Allanis Martins Witajewski", "GARÇOM", "Gelson Elioterio Ramos", "Geovana Alves Batista do Nascimento", "Geovana Bollino Schaedler", "Geovane de Souza Ramos", "Gessica Kauana Rossa Ferreira", "Ghiordanna Montini", "Gilson de Souza", "Giovanny Chagas da Silva", "Giozze Dissenha", "Giselle de Souza Ferreira", "Gislaine Luna Santa Barbara", "Giulia Carolina Olkuszewski de Carvalho", "Glória de Azevedo Peracetta", "Guilherme Augusto de Oliveira Xavier", "Guilherme Cheicoski Lisboa Lourenço de Pontes", "Guilherme da Rosa Ramos", "Guilherme da Silva Souza", "Guilherme Dândalo marcelino", "Guilherme Gonsalves", "Guilherme Henrique Fiorese", "Guilherme Marodin", "Gustavo do Prado Guilherme", "Gustavo haffermann de Almeida", "Gustavo Henrique Adão", "Gustavo Henrique Bezerra Dos Santos", "Gustavo Henrique de Marchi", "Gustavo Ramos do nascimento", "Halana Nayana Santos", "Helam Danton Grilo", "Hellen Cristina Ferreira Poças", "Heloísa Leoplinio Faria", "Hemilly dos Santos Ribas de Almeida", "Henrique Meireles Obladen", "Henrique Ukan", "Higor Fernando Martins da Silva", "Hugo Henrique Leme da Cunha", "Igor Alessandro de Lima", "Igor Calderoni", "Igor Santos da Silva", "Ingrid maira da luz santos", "Isabela Cardoso Ditiuk", "Isabela de Souza Xavier Vianna", "Isabela maria Gomes Vaz dourado", "Isabela Pavoni Martinez", "Isabele Vieira Gallinea", "Isabella de Paula Cavalli", "Isabella Pontes Becker", "Isabelly Brodbeck Hawthorne", "Isabelly da Costa Ribeiro", "Isabelly dos Santos Fagundes", "Isabely Thomaz", "Isadora Nunes de Almeida", "Izabelle Araújo de Oliveira", "Jackson Rodrigues Filho", "Janayna de Barros Olinda", "Janaína Thamiris Cristino", "Jaqueline Basso", "Jaqueline Cristina Braz", "Jeferson Duarte", "Jennifer Terres Fernandes", "Jessica de Oliveira Domingues", "Jessica Ferreira da Rocha", "Jessica Martins", "Jhesler Chattergoon Montilla", "Jhon Deinys Donatti Pino", "Jhulia Carneiro Linhares", "Joao Vitor de Oliveira Konig", "Joice dos Santos Oliveira", "Joice Fernandes de Paula", "Joicy Martins de Oliveira", "Jonas Schultz pina", "Jordana Massocato", "Josué Roda Rodrigues", "José Andre da Silva Rocha", "José Eduardo Mendes", "José Victor Batista Cugler", "João Eduardo de Araujo", "João Guilherme Bohnemberger Bender", "João Guilherme Rocha Mendes", "João Mateus Lopes", "João Pedro Reitz Lemos", "João Victor da Silva Facon", "João Vitor Mendes Betim", "João Vitor Weinert Valles", "Julia Correia dos anjos", "Julia Damarys de Lara", "Julia Helena Barbosa", "Juliana Domingues", "Julián David Buitrago Villa", "Júlia Mendes Savitraz", "Kaio Felipe Cunico", "Kamila da Silva fortes", "Kamilla Fonseca", "Kamilly de Jesus silvestre da silva", "Kamily vitória de lima cunha", "Karine Campos Schmidt Bill", "Kauan Bencks Traczykowski", "Kauan Rafael Bortoluzzi Barbosa", "Kauanne Rodrigues Teixeira", "Kauany Malinoski da Veiga", "Ketlyn Nicole Knupp de Oliveira", "Klarian conceição Martins", "Kleysson Rauan", "Laisla Weber Machniewicz", "Lanna Rafhaele de Oliveira", "Laura Cristina Oliveira", "Laura Raquel Zelaya Flechas", "Layla Sousa", "Leandro de Oliveira Sette", "Leonardo Alvin pedrozo da silva", "Leonardo Aparecido Procópio Zanelato Augusto", "Leonardo Araújo Rodrigues", "Leonardo carvalho", "Leonardo de Andrade Agnes", "Leonardo Felipe rempel de Oliveira", "Leonardo Marques de Oliveira", "Leonardo Padilha de Caldas", "Leonardo Paiva De Oliveira", "Leonardo Quirino Xavier da Silva", "Leonardo Vinicius Ferreira de Lima", "Leonel da Cunha", "leovigildio José da Silva Filho", "Lethycia Ferreira Martins", "Leticia Dochvat de Salles", "Letícia Gabrielli Nogueira", "Letícia Silva", "Liane Rodrigues de moraes", "Luan dos Santos", "Luan poerner quecada", "Luana Ferreira Emmer", "Luana Kerscher Cordeiro", "Lucas Da Silva Moreira", "Lucas Dias da Luz", "Lucas Eduardo Lemes", "Lucas Pontes de Oliveira", "Lucas Santos de Mello", "Lucas Stocker", "Lucas Wilson dos Santos Silva", "Luccas Otavio dos Santos", "Luis Enrique Gonzalez cabello", "Luis Phillipy Nogueira da Costa", "Luisa Nemer", "Luisa Yasmin Beraldo de Abreu", "Luiz André San Martins da Rosa", "Luiz Claudio Divino Silva Filho", "Luiz Ricardo de Castro Junior", "Luiza Marques dos Santos", "Luiza Snitynski da Silva", "Luã Belo De Oliveira", "Luís Eduardo Parizoto Pereira", "Madya Mayer Krinski", "Maghally Fernanda Ricetti", "Maicon Henrique de Assis Fernandes Evangelista dos Santos", "Mailon Leandro de Oliveira", "Manoel Geraldo da Silva Neto", "Maranara de Fátima Silva da Cruz", "Marcelo Garcia Roman Júnior", "Marcielen Fernandes", "Marcone Sampaio", "Marcos Aurélio Lucca", "Marcos Vinicius Boanto Glixinski", "Maria Eduarda Cunha", "Maria Eduarda Portes da Silva", "Maria Eduarda Vechia da Silva", "Maria Luiza Fressato Ferreira da Silva", "Mariana Rocha de Andrade", "Mariana Santos do Nascimento", "Mariana Suzuki", "Marina Costa Consulin", "Marinna Mayer Trawinski", "Mateus Fernandes de Lara Prado", "Mateus Henrique canto e Silva", "Matheus Augusto Pereira de Paula", "Matheus dos Santos Vila Rosa", "Matheus Felipe Costa", "Matheus Felipe Pereira", "Matheus Lopes dos Santos", "Matheus Madureira", "Matheus Motta", "Matheus Silva", "Mauricio de Souza", "Mayna Santos cabecone parreira", "Maysa padilha Gonsalves", "Meire Cristina da Silva", "Michael Henrique de assis Fernandes evangelista dos Santos", "Michel Oliveira de Bastos", "Miriam Elisabete Silva Koltum", "Miriam lara de Andrade Soares", "Monique Evelin Colpani de Oliveira", "Morgana Saraiva Ferreira", "Murilo Dias", "Murilo Estevo da Costa", "Murilo Gregório Vidal de Oliveira", "Nataly Kauane Barcelos de Oliveira", "Natan Henrique Gomez", "Natanael Pedroso Pinto", "Natanael Tony Rodrigues Costa", "Natasha aparecida Souza Pereira", "Nathali Raissa Moraes da Cruz", "Nathalie Cristine Lopes da Cruz", "Natália Cristina Padilha", "Nedlyn Haffermann Trelha", "Nicholas Berlintes", "Nicolas Benhur da cruz marghoti", "Nicolas Julian Oliveira Gutierrez", "Nicolly Thaís Martins", "Odair Pereira", "Osvaldo Stoffel Junior", "Pablo Kaue Alves de Oliveira Lima", "Pablo Lincon Cardoso", "Paloma Duarte", "Paula Luiza Alvez Rocha", "Paulo César de Oliveira", "Pedro Henrique Machado Gadeia", "Pedro Henrique Pereira sobrinho dos Santos", "Poliane Tiller", "Polyana Ribeiro Tostes", "Priscila aparecida Alves Siqueira", "Priscila de Castro Lima", "Priscila Mehret", "Rafael Victor Sutil", "Rafaela Peres Costa", "Raphael Costa Spagnol", "Raphael Pereira de Paula", "Raquel Cristina dos santos", "Rawann Luccas Rossine Ribeiro", "Ray Jackson Custódio", "Rayssa Paula Nogueira", "Renan dos Santos Silva Domingues", "RH LOCAL", "Ricardo Alfonso villaBlanca", "Ricardo Bruno Bentin Reyes", "Rickelme Mateus", "Roger Henrique da Silva", "Ronaldo Santos Munhoz", "Roseane Cardoso da Luz Neto", "Roseli Maria Santana", "Rosendo Cardoso Da Luz Neto", "Rosiane Aparecida da Silva", "Rosidelhia pinto Reis", "Rozângela Marafiao", "Ruan Gabriel Lozano da Rosa", "Sabrina Choma Osga", "Sabrina Krelling Mendes", "Salah Gou Ali", "Samuel Felipe Correa", "Samuel Oliveira da Cunha", "Sara Nunes Fiedler", "Sara Oleczewski Pinheiro", "Sidney Junio Fortes Gonçalves", "Silvana Francisco da Silva", "Solange Simões Faria", "Steyce Cristine de Deus", "Sthefani dos Santos", "Suelen Soares", "SUPERVISOR", "Suzane Martins de Oliveira", "Tainá Ramalho", "Tamires luany inacheski", "Thaiane Franciscon Machado", "Thais Maria dos Santos", "Thamires Fernanda", "Thamirys Sena", "Thauan Carlos nascimento da Rocha", "Thayla vitória haffermann dos Santos", "Thaysa Gabrielli Galindo", "Thiago Andrey Cardoso", "Thiago da Costa Machado", "Thiago De Oliveira", "Thiago Ramos do Nascimento", "Thomas Edison Vieira", "Vanessa Oliveira Simarelli", "Victor Hugo dos Santos", "Victor Hugo Rodrigues Biatto", "Victor Hugo Sidral Siqueira", "Victoria Emanuele da Silva", "Victória Luísa da Luz Gonçalves", "Vinicious Mayer krinski", "Vinícius Ribeiro Costa", "Vitoria machado", "Vitória Gabriela Zanatta", "Vitória Steiger de Carvalho", "Wanderson de Lima Gonçalves", "Wanderson Rodrigues de Souza", "Wesley Dos Santos Bueno", "Wesllen Gabriel Amancio Couto", "WHISKERIA", "WHISKERIA E CHARUTARIA", "William José Ratusznei Fonseca", "Willian Eduardo da Silva", "Yago kicsar da veiga Lacour", "Yuri Gabriel de Oliveira", "Zurik Klisievics Gerigk"];
+const equipe = []; // {nome}
+let selectedSug = null;
+
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function norm(s){return String(s||'').normalize('NFD').replace(/\p{M}/gu,'').toLowerCase().trim();}
+
+function wireSeg(container, onChange){
+  const buttons=container.querySelectorAll('button');
+  buttons.forEach(btn=>btn.addEventListener('click',()=>{
+    buttons.forEach(b=>b.classList.remove('on-yes','on-no'));
+    btn.classList.add(btn.dataset.v==='sim'?'on-yes':'on-no');
+    onChange(btn.dataset.v);
+  }));
 }
-const equipeEl = document.getElementById('equipe');
-EVENT.profissionais.forEach((p, i) => {
-  const div = document.createElement('div');
-  div.className = 'person';
-  div.dataset.i = i;
-  div.innerHTML = `
-    <div class="person-name">${esc(p.nome)}</div>
-    <label>Compareceu?</label>
-    <div class="seg compareceu">
-      <button type="button" data-v="sim">Sim</button>
-      <button type="button" data-v="nao">Não</button>
-    </div>
-    <div class="fields-extra present-fields">
-      <div class="row">
-        <div><label>Chegada</label><input type="time" class="chegada"/></div>
-        <div><label>Saída</label><input type="time" class="saida"/></div>
+function wireYesNo(segId, blockId){
+  const state={v:'nao'};
+  wireSeg(document.getElementById(segId), v=>{state.v=v; document.getElementById(blockId).classList.toggle('show', v==='sim');});
+  return state;
+}
+const fora=wireYesNo('fora-seg','fora-block');
+const reemb=wireYesNo('reemb-seg','reemb-block');
+const he=wireYesNo('he-seg','he-block');
+
+const busca=document.getElementById('busca');
+const sug=document.getElementById('sug');
+const equipeEl=document.getElementById('equipe');
+const emptyEl=document.getElementById('equipe-empty');
+
+function renderEquipe(){
+  emptyEl.style.display = equipe.length? 'none':'block';
+  [...equipeEl.querySelectorAll('.person')].forEach(n=>n.remove());
+  equipe.forEach((p,i)=>{
+    const div=document.createElement('div');
+    div.className='person';
+    div.dataset.i=i;
+    div.innerHTML=`
+      <div class="person-head">
+        <div class="person-name">${esc(p.nome)}</div>
+        <button type="button" class="icon-btn" data-rm="${i}">Remover</button>
       </div>
-      <label>Feedback</label>
-      <textarea class="feedback" placeholder="Pontualidade, postura, desempenho…"></textarea>
-    </div>
-    <div class="fields-extra absent-fields">
-      <label>Motivo / observação</label>
-      <textarea class="motivo" placeholder="Avisou? Substituto?"></textarea>
-    </div>`;
-  equipeEl.appendChild(div);
-});
-function wireSeg(container, onChange) {
-  const buttons = container.querySelectorAll('button');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('on-yes', 'on-no'));
-      btn.classList.add(btn.dataset.v === 'sim' ? 'on-yes' : 'on-no');
-      onChange(btn.dataset.v);
+      <label>Compareceu?</label>
+      <div class="seg compareceu">
+        <button type="button" data-v="sim">Sim</button>
+        <button type="button" data-v="nao">Não</button>
+      </div>
+      <div class="fields-extra present-fields">
+        <div class="row">
+          <div><label>Chegada</label><input type="time" class="chegada"/></div>
+          <div><label>Saída</label><input type="time" class="saida"/></div>
+        </div>
+        <label>Feedback</label>
+        <textarea class="feedback" placeholder="Pontualidade, postura, desempenho…"></textarea>
+      </div>
+      <div class="fields-extra absent-fields">
+        <label>Motivo / observação</label>
+        <textarea class="motivo" placeholder="Avisou? Substituto?"></textarea>
+      </div>`;
+    equipeEl.appendChild(div);
+    wireSeg(div.querySelector('.compareceu'), v=>{
+      div.querySelector('.present-fields').classList.toggle('show', v==='sim');
+      div.querySelector('.absent-fields').classList.toggle('show', v==='nao');
+      div.dataset.compareceu=v;
+    });
+    div.querySelector('[data-rm]').addEventListener('click',()=>{
+      equipe.splice(i,1); renderEquipe();
     });
   });
 }
-document.querySelectorAll('.person').forEach(person => {
-  wireSeg(person.querySelector('.compareceu'), v => {
-    person.querySelector('.present-fields').classList.toggle('show', v === 'sim');
-    person.querySelector('.absent-fields').classList.toggle('show', v === 'nao');
-    person.dataset.compareceu = v;
-  });
-});
-function wireYesNo(segId, blockId) {
-  const state = { v: 'nao' };
-  wireSeg(document.getElementById(segId), v => {
-    state.v = v;
-    document.getElementById(blockId).classList.toggle('show', v === 'sim');
-  });
-  return state;
+
+function addNome(nome){
+  nome=(nome||'').trim();
+  if(!nome) return;
+  if(equipe.some(p=>norm(p.nome)===norm(nome))){ alert('Esse profissional já está na lista.'); return; }
+  equipe.push({nome});
+  busca.value=''; selectedSug=null; sug.classList.remove('show');
+  renderEquipe();
 }
-const fora = wireYesNo('fora-seg', 'fora-block');
-const reemb = wireYesNo('reemb-seg', 'reemb-block');
-const he = wireYesNo('he-seg', 'he-block');
-const extrasEl = document.getElementById('extras');
-document.getElementById('add-extra').addEventListener('click', () => {
-  const item = document.createElement('div');
-  item.className = 'extra-item';
-  item.innerHTML = `
+
+function showSug(q){
+  const nq=norm(q);
+  if(nq.length<1){ sug.classList.remove('show'); sug.innerHTML=''; return; }
+  const hits=PROFISSIONAIS.filter(n=>norm(n).includes(nq)).slice(0,40);
+  if(!hits.length){ sug.innerHTML='<div class="sug-item" style="color:var(--muted)">Nenhum nome encontrado</div>'; sug.classList.add('show'); return; }
+  sug.innerHTML=hits.map(n=>`<div class="sug-item" data-n="${esc(n)}">${esc(n)}</div>`).join('');
+  sug.classList.add('show');
+  sug.querySelectorAll('.sug-item[data-n]').forEach(el=>{
+    el.addEventListener('click',()=>{ selectedSug=el.dataset.n; busca.value=el.dataset.n; sug.classList.remove('show'); addNome(el.dataset.n); });
+  });
+}
+busca.addEventListener('input',()=>showSug(busca.value));
+busca.addEventListener('keydown',e=>{ if(e.key==='Enter'){ e.preventDefault(); addNome(selectedSug||busca.value);} });
+document.getElementById('add-btn').addEventListener('click',()=>addNome(selectedSug||busca.value));
+document.addEventListener('click',e=>{ if(!e.target.closest('.suggestions')) sug.classList.remove('show'); });
+
+const extrasEl=document.getElementById('extras');
+document.getElementById('add-extra').addEventListener('click',()=>{
+  const item=document.createElement('div');
+  item.className='person';
+  item.innerHTML=`
     <label>Nome</label><input type="text" class="ex-nome" placeholder="Nome completo"/>
     <div class="row">
       <div><label>Chegada</label><input type="time" class="ex-chegada"/></div>
       <div><label>Saída</label><input type="time" class="ex-saida"/></div>
     </div>
     <label>Feedback</label><textarea class="ex-feedback"></textarea>
-    <button type="button" class="remove-btn">Remover</button>`;
-  item.querySelector('.remove-btn').addEventListener('click', () => item.remove());
+    <button type="button" class="icon-btn" style="margin-top:8px">Remover</button>`;
+  item.querySelector('.icon-btn').addEventListener('click',()=>item.remove());
   extrasEl.appendChild(item);
 });
-document.getElementById('enviar').addEventListener('click', () => {
-  const equipe = [];
-  document.querySelectorAll('.person').forEach((person, i) => {
-    const p = EVENT.profissionais[i];
-    equipe.push({
-      nome: p.nome,
-      compareceu: person.dataset.compareceu || null,
-      chegada: person.querySelector('.chegada').value || null,
-      saida: person.querySelector('.saida').value || null,
-      feedback: person.querySelector('.feedback').value.trim() || null,
-      motivoAusencia: person.querySelector('.motivo').value.trim() || null,
+
+document.getElementById('enviar').addEventListener('click',()=>{
+  const data=document.getElementById('data').value;
+  const local=document.getElementById('local').value.trim();
+  if(!data||!local){ alert('Preencha data e local do evento.'); return; }
+  if(!equipe.length){ alert('Adicione pelo menos um profissional.'); return; }
+  const people=[];
+  document.querySelectorAll('#equipe .person').forEach((el,i)=>{
+    people.push({
+      nome:equipe[i].nome,
+      compareceu:el.dataset.compareceu||null,
+      chegada:el.querySelector('.chegada')?.value||null,
+      saida:el.querySelector('.saida')?.value||null,
+      feedback:el.querySelector('.feedback')?.value.trim()||null,
+      motivoAusencia:el.querySelector('.motivo')?.value.trim()||null,
     });
   });
-  const extras = [...extrasEl.querySelectorAll('.extra-item')].map(el => ({
-    nome: el.querySelector('.ex-nome').value.trim(),
-    chegada: el.querySelector('.ex-chegada').value || null,
-    saida: el.querySelector('.ex-saida').value || null,
-    feedback: el.querySelector('.ex-feedback').value.trim() || null,
-  })).filter(x => x.nome);
-  if (equipe.some(p => !p.compareceu)) {
-    alert('Marque se cada profissional compareceu (Sim/Não).');
-    return;
-  }
-  const payload = {
-    evento: { titulo: EVENT.titulo, local: EVENT.local, data: EVENT.data },
-    equipe,
-    profissionaisExtras: fora.v === 'sim' ? extras : [],
-    reembolsos: reemb.v === 'sim'
-      ? { teve: true, detalhe: document.getElementById('reemb-detalhe').value.trim() }
-      : { teve: false },
-    horaExtra: he.v === 'sim' ? {
-      teve: true,
-      horas: document.getElementById('he-horas').value || null,
-      valorHora: document.getElementById('he-valor').value || null,
-      solicitou: document.getElementById('he-solicitou').value.trim() || null,
-      quemFez: document.getElementById('he-quem').value.trim() || null,
-    } : { teve: false },
-    preenchidoEm: new Date().toISOString(),
+  if(people.some(p=>!p.compareceu)){ alert('Marque se cada profissional compareceu.'); return; }
+  const extras=[...extrasEl.querySelectorAll('.person')].map(el=>({
+    nome:el.querySelector('.ex-nome').value.trim(),
+    chegada:el.querySelector('.ex-chegada').value||null,
+    saida:el.querySelector('.ex-saida').value||null,
+    feedback:el.querySelector('.ex-feedback').value.trim()||null,
+  })).filter(x=>x.nome);
+  const payload={
+    evento:{data, local},
+    equipe:people,
+    profissionaisExtras: fora.v==='sim'?extras:[],
+    reembolsos: reemb.v==='sim'?{teve:true,detalhe:document.getElementById('reemb-detalhe').value.trim()}:{teve:false},
+    horaExtra: he.v==='sim'?{
+      teve:true,
+      horas:document.getElementById('he-horas').value||null,
+      valorHora:document.getElementById('he-valor').value||null,
+      solicitou:document.getElementById('he-solicitou').value.trim()||null,
+      quemFez:document.getElementById('he-quem').value.trim()||null,
+    }:{teve:false},
+    preenchidoEm:new Date().toISOString(),
   };
-  document.getElementById('resumo').textContent = JSON.stringify(payload, null, 2);
+  document.getElementById('resumo').textContent=JSON.stringify(payload,null,2);
   document.getElementById('done').classList.add('show');
-  window.__lastPayload = payload;
+  window.__lastPayload=payload;
 });
-document.getElementById('copiar').addEventListener('click', async () => {
-  const t = JSON.stringify(window.__lastPayload, null, 2);
-  try { await navigator.clipboard.writeText(t); document.getElementById('copiar').textContent = 'Copiado!'; }
-  catch { prompt('Copie:', t); }
+document.getElementById('copiar').addEventListener('click',async()=>{
+  const t=JSON.stringify(window.__lastPayload,null,2);
+  try{await navigator.clipboard.writeText(t); document.getElementById('copiar').textContent='Copiado!';}
+  catch{prompt('Copie:',t);}
 });
-document.getElementById('fechar').addEventListener('click', () => {
-  document.getElementById('done').classList.remove('show');
-});
+document.getElementById('fechar').addEventListener('click',()=>document.getElementById('done').classList.remove('show'));
 </script>
 </body>
 </html>
