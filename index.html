@@ -133,6 +133,11 @@
     </div>
   </section>
   <section class="card">
+    <h2>Faltas no evento</h2>
+    <label>Faltas no evento (opcional)</label>
+    <textarea id="faltas" placeholder="Quem faltou, se avisou, substituto…"></textarea>
+  </section>
+  <section class="card">
     <h2>Observações</h2>
     <label>Observações gerais</label>
     <textarea id="observacoes" placeholder="Algo importante sobre o evento…"></textarea>
@@ -298,6 +303,7 @@ document.getElementById('enviar').addEventListener('click',()=>{
       solicitou:document.getElementById('he-solicitou').value.trim()||null,
       quemFez:document.getElementById('he-quem').value.trim()||null,
     }:{teve:false},
+    faltas:document.getElementById('faltas').value.trim()||null,
     observacoes:document.getElementById('observacoes').value.trim()||null,
     preenchidoEm:new Date().toISOString(),
   };
@@ -358,11 +364,14 @@ function montarRelatorioTexto(payload, res){
     lines.push('Solicitou: '+(h.solicitou||'')+'  Quem fez: '+(h.quemFez||''));
   }
   lines.push('');
+  lines.push('FALTAS NO EVENTO');
+  lines.push(payload.faltas||'(nenhuma)');
+  lines.push('');
   lines.push('OBSERVAÇÕES');
   lines.push(payload.observacoes||'(nenhuma)');
   lines.push('');
   lines.push('Preenchido em: '+(payload.preenchidoEm||''));
-  return lines.join('\\n');
+  return lines.join('\n');
 }
 document.getElementById('baixar').addEventListener('click',()=>{
   const payload=window.__lastPayload;
